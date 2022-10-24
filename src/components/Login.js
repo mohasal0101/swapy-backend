@@ -1,50 +1,54 @@
 import React from "react";
 import base64 from "base-64";
 import axios from "axios";
+import '../App.css'
+
 
  
-//create a function that has login form that logs you in with username and password and returns a token
 
 const Login = () => {
-    const [username, setUsername] = React.useState("");
-    const [password, setPassword] = React.useState("");
+    /* const [username, setUsername] = React.useState("");
+    const [password, setPassword] = React.useState(""); */
     const [error, setError] = React.useState("");
     const [token, setToken] = React.useState("");
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        const token = base64.encode(`${username}:${password}`);
-        const headers = { Authorization: `Bearer ${token}` };
-        axios.post("https://swapybackend.herokuapp.com/signin", { headers })
+        const username = e.target.username.value;
+        const password = e.target.password.value;
+        const headers = { Authorization: "Basic " + base64.encode(username + ":" + password) };
+        axios.post("https://swapybackend.herokuapp.com/signin", {},{ headers })
             .then((res) => {
-                setToken(res.data.token);
-                setError("");
+              console.log(res.data);
+              setError("");
             })
             .catch((err) => {
                 setError("Invalid username or password");
                 setToken("");
                 console.log(err);
             });
+            console.log(username, password);
     };
 
     return (
         <div className="App">
             <h1>Login</h1>
             <form onSubmit={handleSubmit}>
-                <input
+              
+                <input 
                     type="text"
                     placeholder="username"
-                    value={username}
-                    onChange={(e) => setUsername(e.target.value)}
+                    name="username"
                 />
                 <input
                     type="password"
                     placeholder="password"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
+                    name="password"
                 />
-                <button type="submit">Login</button>
+                            <button style={{marginTop: '10px'}} type="submit">Login</button>
+
             </form>
+
             {error && <p>{error}</p>}
             {token && <p>{token}</p>}
         </div>
