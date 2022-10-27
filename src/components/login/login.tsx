@@ -1,4 +1,6 @@
 import React from "react";
+import AnimatedText from "react-animated-text-content";
+import { Fade } from "@progress/kendo-react-animation";
 import "./login.scss";
 import logo from "../../assets/images/logo.png";
 import facebook from "../../assets/images/facebook.svg";
@@ -81,7 +83,9 @@ class Login extends React.Component<Props> {
               : "login__create-container--inactive"
           }`}
         >
-          Create Account
+          <AnimatedText animationType="float" interval={0.06} duration={3.0}>
+            Create Account
+          </AnimatedText>
           <span className="login__create-container--info-text">
             or use email for your registration
           </span>
@@ -178,7 +182,9 @@ class Login extends React.Component<Props> {
               src={logo}
               alt="Budwriter"
             />
-            Swapy
+            <AnimatedText animationType="float" interval={0.06} duration={2.8}>
+              Swapy
+            </AnimatedText>
           </div>
           <div className="login__login-container__main-container">
             <span className="login__login-container__main-container--info-text">
